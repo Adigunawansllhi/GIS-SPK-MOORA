@@ -1,0 +1,25 @@
+:root {
+    --primary: #f7c700;
+    --secondary: #010378;
+}
+
+nav .navbar {
+    background-color: var(--secondary);
+}
+
+.btn {
+    border-radius: 50px;
+    background-color: var(--secondary);
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: var(--secondary);
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
