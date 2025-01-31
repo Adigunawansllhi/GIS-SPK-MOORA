@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/summernote/summernote-bs4.min.css') }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -94,7 +95,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('user') }}" class="nav-link text-white fw-bold">
+                        <a href="{{ route('users.index') }}" class="nav-link text-white fw-bold">
                             <i class="nav-icon fas fa-users"></i>
                             <p>USER</p>
                         </a>
@@ -190,6 +191,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>

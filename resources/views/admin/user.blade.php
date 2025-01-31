@@ -2,8 +2,9 @@
 
 @section('content')
 <div class="card m-3 shadow-sm">
-    <div class="card-header bg-primary text-white">
-        <h3 class="card-title mb-0">User  Management</h3>
+    <!-- Card Header -->
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h3 class="card-title mb-0">User Management</h3>
         <div class="d-flex gap-2">
             <a href="#" class="btn btn-light btn-sm" title="Tambah Data" data-bs-toggle="modal" data-bs-target="#addUserModal">
                 <i class="fas fa-plus"></i> Tambah Data
@@ -16,7 +17,8 @@
             </a>
         </div>
     </div>
-    <!-- /.card-header -->
+
+    <!-- Card Body -->
     <div class="card-body p-0">
         <table class="table table-hover table-striped">
             <thead class="thead-light">
@@ -58,7 +60,8 @@
             </tbody>
         </table>
     </div>
-    <!-- /.card-body -->
+
+    <!-- Card Footer -->
     <div class="card-footer d-flex justify-content-end">
         <nav aria-label="Page navigation">
             <ul class="pagination pagination-sm mb-0">
@@ -73,16 +76,15 @@
 </div>
 
 <!-- Modal Tambah Data -->
-<!-- Modal Tambah Data -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="addUserModalLabel">Tambah User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST">
+                <form action="{{ route('users.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama</label>
@@ -112,4 +114,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection
