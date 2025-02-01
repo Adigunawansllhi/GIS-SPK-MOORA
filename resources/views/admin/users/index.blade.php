@@ -6,7 +6,7 @@
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
         <h3 class="card-title mb-0">User Management</h3>
         <div class="d-flex gap-2">
-            <a href="#" class="btn btn-light btn-sm" title="Tambah Data" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <a href="{{ route('users.create') }}" class="btn btn-light btn-sm" title="Tambah Data">
                 <i class="fas fa-plus"></i> Tambah Data
             </a>
             <a href="#" class="btn btn-light btn-sm" title="Ekspor PDF">
@@ -37,7 +37,7 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <span class="badge bg-{{ $user->role == 'admin' ? 'success' : 'info' }}">
+                        <span class="badge bg-{{ $user->role == 'admin' ? 'success' : ($user->role == 'pimpinan' ? 'warning' : 'info') }}">
                             {{ $user->role }}
                         </span>
                     </td>
@@ -46,7 +46,7 @@
                             <a href="#" class="btn btn-outline-warning btn-sm me-2" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <form action="#" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus?')">
+                            <form action="{{ route('users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete">
@@ -74,46 +74,4 @@
         </nav>
     </div>
 </div>
-
-<!-- Modal Tambah Data -->
-<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="addUserModalLabel">Tambah User</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('users.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-control" id="role" name="role" required>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 @endsection

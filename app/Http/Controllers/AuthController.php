@@ -19,17 +19,21 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed', // Pastikan ini ada
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'masyarakat', // Set role default
-        ]);
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'masyarakat', // Role otomatis diatur sebagai masyarakat
+            ]);
 
-        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+            return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal melakukan registrasi: ' . $e->getMessage());
+        }
     }
 
     public function showLoginForm()

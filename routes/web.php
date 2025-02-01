@@ -17,8 +17,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route untuk manajemen pengguna
-Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Menampilkan daftar pengguna
-Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Menyimpan data pengguna
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.delete');
 
 // Route untuk dashboard
 Route::get('/admin/dashboard', function () {

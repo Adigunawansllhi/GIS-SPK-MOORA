@@ -7,6 +7,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <link rel="icon" href="{{ asset('asset/img/logo-pu.png') }}" type="image/x-icon">
     <style>
@@ -44,9 +45,9 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                     <div class="input-group">
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Masukkan konfirmasi password" required>
                         <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                             <i class="bi bi-eye"></i>
                         </button>
@@ -62,5 +63,7 @@
     <!-- Bootstrap JS Bundle -->
     <script src="{{ asset('asset/js/script.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>
