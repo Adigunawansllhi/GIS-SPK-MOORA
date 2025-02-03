@@ -42,7 +42,7 @@
         border: 1px solid #ddd;
         border-radius: 10px;
         }
-        
+
     </style>
 
 
@@ -92,8 +92,9 @@
                     <img src="{{ asset('AdminLTE/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image" style="width: 40px; height: 40px;">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block text-white">Alexander Pierce</a>
+                    <a href="#" class="d-block text-white">{{ Auth::user()->name }}</a>
                 </div>
+
             </div>
 
             <!-- SidebarSearch Form -->

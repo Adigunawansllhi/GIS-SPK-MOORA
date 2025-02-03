@@ -42,7 +42,6 @@
                         <th>Jenis</th>
                         <th>Alamat</th>
                         <th>Status</th>
-                        <th>Foto</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -63,13 +62,6 @@
                                 @endif">
                                 {{ $kerusakan->status }}
                             </span>
-                        </td>
-                        <td>
-                            @if($kerusakan->upload_foto)
-                                <img src="{{ asset('uploads/' . $kerusakan->upload_foto) }}" class="img-thumbnail" style="width: 60px;">
-                            @else
-                                <span class="text-muted">Tidak ada foto</span>
-                            @endif
                         </td>
                         <td>
                             <!-- Tombol Info -->
