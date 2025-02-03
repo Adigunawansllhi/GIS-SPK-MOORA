@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -41,6 +41,49 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('success', 'User  berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan user: ' . $e->getMessage());
+        }
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'User tidak ditermukan');
+        }
+        return view('admin.users.edit', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Temukan pengguna berdasarkan ID
+        $user = User::find($id);
+
+        // Periksa apakah pengguna ada
+        if (!$user) {
+            return redirect()->back()->with('error', 'User  tidak ditemukan.');
+        }
+
+        // Validasi data yang diterima
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id, // Pastikan email unik, kecuali untuk pengguna yang sama
+            'password' => 'nullable|string|min:8|confirmed', // Password bisa kosong
+            'role' => 'required|string|in:admin,pimpinan,masyarakat', // Validasi role
+        ]);
+
+        try {
+            // Update data pengguna
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password); // Hanya update password jika diisi
+            }
+            $user->role = $request->role; // Simpan role dari inputan
+            $user->save();
+
+            return redirect()->route('users.index')->with('success', 'User  berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui user: ' . $e->getMessage());
         }
     }
     public function destroy($id)

@@ -11,3 +11,5 @@ const togglePassword = document.getElementById('togglePassword');
             ? '<i class="bi bi-eye"></i>'
             : '<i class="bi bi-eye-slash"></i>';
     });
+
+    

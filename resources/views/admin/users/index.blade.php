@@ -43,7 +43,7 @@
                     </td>
                     <td>
                         <div class="d-flex justify-content-start">
-                            <a href="#" class="btn btn-outline-warning btn-sm me-2" title="Edit">
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-warning btn-sm me-2" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">

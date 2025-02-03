@@ -31,40 +31,53 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <style>
+        #map {
+        width: 100%;
+        height: 300px; /* Pastikan ada ukuran */
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        }
+        
+    </style>
+
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-    <
-<!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
-        </li>
-    </ul>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="index3.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Contact</a>
+            </li>
+        </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-        <!-- Logout Button -->
-        <li class="nav-item">
-            <a href="#" class="btn btn-danger" onclick="confirmLogout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-        </li>
-    </ul>
-</nav>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Logout Button -->
+            <li class="nav-item">
+                <a href="#" class="btn btn-outline-danger btn-sm" onclick="confirmLogout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar elevation-4 sidebar-dark-primary" style="background-color: #010378;">
+    <aside class="main-sidebar elevation-4 sidebar-dark-primary" style="background-color: #2c3e50;">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link text-decoration-none">
             <img src="{{ asset('asset/img/logo-pu.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 33px; height: 33px;">
@@ -100,19 +113,19 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white fw-bold">
+                        <a href="#" class="nav-link text-white">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>DASHBOARD</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link text-white fw-bold">
+                        <a href="{{ route('users.index') }}" class="nav-link text-white">
                             <i class="nav-icon fas fa-users"></i>
                             <p>USER</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white">
+                        <a href="{{ route('kerusakan.index') }}" class="nav-link text-white">
                             <i class="nav-icon fas fa-tools"></i>
                             <p>KERUSAKAN</p>
                         </a>
@@ -121,6 +134,12 @@
                         <a href="#" class="nav-link text-white">
                             <i class="nav-icon fas fa-calculator"></i>
                             <p>PERHITUNGAN</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#  " class="nav-link text-white">
+                            <i class="nav-icon fas fa-exclamation-circle"></i> <!-- Ikon diubah ke fa-exclamation-circle -->
+                            <p>PENGADUAN</p>
                         </a>
                     </li>
                 </ul>
@@ -204,7 +223,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
     // Script untuk menampilkan SweetAlert

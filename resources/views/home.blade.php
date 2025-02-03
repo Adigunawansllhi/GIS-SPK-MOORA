@@ -257,108 +257,93 @@
         </div>
     </section>
     <section id="pengaduan" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title">Pengaduan Masyarakat</h2>
-            <div class="form-container">
-                <form id="pengaduanForm">
-                    <!-- Nama Pelapor -->
-                    <div class="mb-3">
-                        <label for="namaPelapor" class="form-label">Nama Pelapor</label>
-                        <input type="text" class="form-control" id="namaPelapor" placeholder="Masukkan nama Anda" required>
-                    </div>
-
-                    <!-- Nomor HP/WA -->
-                    <div class="mb-3">
-                        <label for="nomorHP" class="form-label">Nomor HP/WA</label>
-                        <input type="text" class="form-control" id="nomorHP" placeholder="Masukkan nomor HP/WA" required>
-                    </div>
-
-                    <!-- Alamat Kerusakan -->
-                    <div class="mb-3">
-                        <label for="alamatKerusakan" class="form-label">Alamat Kerusakan</label>
-                        <input type="text" class="form-control" id="alamatKerusakan" placeholder="Masukkan alamat kerusakan" required>
-                    </div>
-
-                    <!-- Lokasi Kerusakan (Leaflet Maps) -->
-                    <div class="mb-3">
-                        <label for="lokasiKerusakan" class="form-label">Lokasi Kerusakan</label>
-                        <div id="map"></div>
-                        <input type="hidden" id="lokasiKerusakan" name="lokasiKerusakan" required>
-                        <button type="button" id="lokasiSaya" class="btn btn-primary mt-2">
-                            <i class="bi bi-geo-alt"></i> Gunakan Lokasi Saya
-                        </button>
-                    </div>
-
-                    <!-- Jenis Infrastruktur yang Rusak -->
-                    <div class="mb-3">
-                        <label for="jenisInfrastruktur" class="form-label">Jenis Infrastruktur yang Rusak</label>
-                        <select class="form-control" id="jenisInfrastruktur" required>
-                            <option value="">Pilih Jenis Infrastruktur</option>
-                            <option value="Jalan Berlubang">Jalan Berlubang</option>
-                            <option value="Jembatan Rusak">Jembatan Rusak</option>
-                            <option value="Drainase Tersumbat">Drainase Tersumbat</option>
-                            <option value="Lampu Jalan Mati">Lampu Jalan Mati</option>
-                            <option value="Bangunan Publik Rusak">Bangunan Publik Rusak</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
-                        <input type="text" class="form-control mt-2" id="jenisLainnya" placeholder="Jelaskan jenis lainnya" style="display: none;">
-                    </div>
-
-                    <!-- Deskripsi Kerusakan -->
-                    <div class="mb-3">
-                        <label for="deskripsiKerusakan" class="form-label">Deskripsi Kerusakan</label>
-                        <textarea class="form-control" id="deskripsiKerusakan" rows="4" placeholder="Jelaskan kerusakan yang terjadi" required></textarea>
-                    </div>
-
-                    <!-- Dampak yang Ditimbulkan -->
-                    <div class="mb-3">
-                        <label class="form-label">Dampak yang Ditimbulkan</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="dampak1" value="Menghambat aktivitas warga">
-                            <label class="form-check-label" for="dampak1">Menghambat aktivitas warga</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="dampak2" value="Membahayakan pengguna jalan">
-                            <label class="form-check-label" for="dampak2">Membahayakan pengguna jalan</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="dampak3" value="Menyebabkan banjir/genangan">
-                            <label class="form-check-label" for="dampak3">Menyebabkan banjir/genangan</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="dampak4" value="Mengganggu transportasi umum">
-                            <label class="form-check-label" for="dampak4">Mengganggu transportasi umum</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="dampak5" value="Lainnya">
-                            <label class="form-check-label" for="dampak5">Lainnya</label>
-                            <input type="text" class="form-control mt-2" id="dampakLainnya" placeholder="Jelaskan dampak lainnya" style="display: none;">
-                        </div>
-                    </div>
-
-                    <!-- Upload Bukti (Foto/Video) -->
-                    <div class="mb-3">
-                        <label for="uploadBukti" class="form-label">Upload Bukti (Foto/Video)</label>
-                        <input type="file" class="form-control" id="uploadBukti" accept="image/*, video/*" required>
-                    </div>
-
-                    <!-- Tanggal Pengaduan -->
-                    <div class="mb-3">
-                        <label for="tanggalPengaduan" class="form-label">Tanggal Pengaduan</label>
-                        <input type="date" class="form-control" id="tanggalPengaduan" required>
-                    </div>
-
-                    <!-- Status Pengaduan -->
-                    <div class="mb-3">
-                        <label for="statusPengaduan" class="form-label">Status Pengaduan</label>
-                        <input type="text" class="form-control" id="statusPengaduan" value="Menunggu Verifikasi" readonly>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-submit">Kirim Pengaduan</button>
-                </form>
+        <div class="container mt-5">
+            <h2 class="mb-4">Form Pengaduan Infrastruktur</h2>
+            <form id="pengaduanForm" action="#" method="POST" enctype="multipart/form-data">
+                @csrf
+                        @if ($errors->any())
+                 <div div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+                 @endif
+                <div class="mb-3">
+                    <label class="form-label">Nama Pelapor</label>
+                    <input type="text" class="form-control" name="nama_pelapor" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nomor HP/WA</label>
+                    <input type="text" class="form-control" name="nomor_hp" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Alamat Kerusakan</label>
+                    <input type="text" class="form-control" name="alamat_kerusakan" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lokasi Kerusakan</label>
+                    <div id="map"></div>
+                    <input type="hidden" name="lokasi_kerusakan" id="lokasi_kerusakan" required>
+                    <button type="button" id="lokasiSaya" class="btn btn-primary mt-2">Gunakan Lokasi Saya</button>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Jenis Infrastruktur</label>
+                    <select class="form-control" name="jenis_infrastruktur" id="jenis_infrastruktur" required>
+                        <option value="Jalan">Jalan</option>
+                        <option value="Jembatan">Jembatan</option>
+                        <option value="Drainase">Drainase</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                    <input type="text" class="form-control mt-2" name="jenis_lainnya" id="jenis_lainnya" placeholder="Jelaskan jenis lainnya" style="display:none;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Deskripsi Kerusakan</label>
+                    <textarea class="form-control" name="deskripsi_kerusakan" rows="4" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Dampak yang Ditimbulkan</label>
+                    <div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Macet" id="dampak1">
+                            <label class="form-check-label" for="dampak1">Macet</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Kecelakaan" id="dampak2">
+                            <label class="form-check-label" for="dampak2">Kecelakaan</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Banjir" id="dampak3">
+                            <label class="form-check-label" for="dampak3">Banjir</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Kerusakan Kendaraan" id="dampak4">
+                            <label class="form-check-label" for="dampak4">Kerusakan Kendaraan</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Lainnya" id="dampak5">
+                            <label class="form-check-label" for="dampak5">Lainnya</label>
+                        </div>
+                        <input type="text" class="form-control mt-2" name="dampak_lainnya" id="dampak_lainnya" placeholder="Jelaskan dampak lainnya" style="display:none;">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Upload Bukti (Foto/Video)</label>
+                    <input type="file" class="form-control" name="upload_bukti" accept="image/*, video/*">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tanggal Pengaduan</label>
+                    <input type="date" class="form-control" name="tanggal_pengaduan" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Status Pengaduan</label>
+                    <input type="text" class="form-control" name="status_pengaduan" value="Menunggu Verifikasi" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">Kirim Pengaduan</button>
+            </form>
         </div>
+
     </section>
 
     <!-- Galeri Section -->
@@ -411,76 +396,68 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ asset('asset/js/script.js') }}"></script>
     <script>
         // Koordinat default: Sibolga
-        const defaultLat = -1.7429;
+        const defaultLat = 1.7429;
         const defaultLng = 98.7797;
 
         // Initialize Leaflet Map
-        const map = L.map('map').setView([defaultLat, defaultLng], 13); // Zoom level 13
+        const map = L.map('map').setView([defaultLat, defaultLng], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map); // Marker default di Sibolga
+        let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
 
         // Simpan koordinat saat marker dipindahkan
         marker.on('dragend', function(e) {
             const { lat, lng } = e.target.getLatLng();
-            document.getElementById('lokasiKerusakan').value = `${lat}, ${lng}`;
+            document.querySelector('input[name="lokasi_kerusakan"]').value = `${lat}, ${lng}`;
         });
 
         // Simpan koordinat saat peta diklik
         map.on('click', function(e) {
             const { lat, lng } = e.latlng;
-            if (marker) {
-                marker.setLatLng([lat, lng]); // Pindahkan marker ke lokasi yang diklik
-            }
-            document.getElementById('lokasiKerusakan').value = `${lat}, ${lng}`;
+            marker.setLatLng([lat, lng]);
+            document.querySelector('input[name="lokasi_kerusakan"]').value = `${lat}, ${lng}`;
         });
 
         // Tombol "Gunakan Lokasi Saya"
         document.getElementById('lokasiSaya').addEventListener('click', function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        marker.setLatLng([lat, lng]); // Pindahkan marker ke lokasi pengguna
-                        map.setView([lat, lng], 15); // Zoom ke lokasi pengguna
-                        document.getElementById('lokasiKerusakan').value = `${lat}, ${lng}`;
-                    },
-                    (error) => {
-                        alert('Tidak dapat mengakses lokasi Anda. Pastikan izin lokasi diaktifkan.');
-                        console.error(error);
-                    }
-                );
-            } else {
-                alert('Browser Anda tidak mendukung geolokasi.');
-            }
-        });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                var lokasi = latitude + ',' + longitude;
+                document.getElementById('lokasi_kerusakan').value = lokasi;
+                alert('Lokasi berhasil diambil: ' + lokasi); // Untuk debugging
+            }, function(error) {
+                alert('Gagal mengambil lokasi: ' + error.message); // Untuk debugging
+            });
+        } else {
+            alert('Geolocation tidak didukung di browser ini.'); // Untuk debugging
+        }
+    });
 
         // Toggle input untuk jenis infrastruktur lainnya
-        document.getElementById('jenisInfrastruktur').addEventListener('change', function() {
-            const lainnyaInput = document.getElementById('jenisLainnya');
+        document.getElementById('jenis_infrastruktur').addEventListener('change', function() {
+            const lainnyaInput = document.getElementById('jenis_lainnya');
             lainnyaInput.style.display = this.value === 'Lainnya' ? 'block' : 'none';
-        });
-
-        // Toggle input untuk dampak lainnya
-        document.getElementById('dampak5').addEventListener('change', function() {
-            const lainnyaInput = document.getElementById('dampakLainnya');
-            lainnyaInput.style.display = this.checked ? 'block' : 'none';
         });
 
         // Form submission
         document.getElementById('pengaduanForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Pengaduan berhasil dikirim!');
-            // Reset form
-            this.reset();
-            marker.setLatLng([defaultLat, defaultLng]); // Kembalikan marker ke lokasi default
-            document.getElementById('lokasiKerusakan').value = `${defaultLat}, ${defaultLng}`;
-        });
+
+});
+
+document.getElementById('dampak5').addEventListener('change', function() {
+    if (this.checked) {
+        document.getElementById('dampak_lainnya').style.display = 'block';
+    } else {
+        document.getElementById('dampak_lainnya').style.display = 'none';
+    }
+});
     </script>
 </body>
 </html>
