@@ -46,15 +46,13 @@
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-warning btn-sm me-2" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <form action="{{ route('users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-outline-danger btn-sm delete-user" data-id="{{ $user->id }}" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
                         </div>
                     </td>
+
+
                 </tr>
                 @endforeach
             </tbody>
@@ -74,4 +72,40 @@
         </nav>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.delete-user').forEach(button => {
+            button.addEventListener("click", function () {
+                let userId = this.getAttribute("data-id");
+
+                Swal.fire({
+                    title: "Apakah Anda yakin?",
+                    text: "Data user akan dihapus secara permanen!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Ya, hapus!",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let form = document.createElement("form");
+                        form.action = "{{ url('users') }}/" + userId;
+                        form.method = "POST";
+                        form.innerHTML = `
+                            @csrf
+                            @method('DELETE')
+                        `;
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+
 @endsection
