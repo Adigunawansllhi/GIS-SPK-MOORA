@@ -131,7 +131,7 @@
                     <img src="{{ asset('AdminLTE/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image" style="width: 40px; height: 40px;">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block text-white">{{ Auth::user()->name }}</a>
+                    <a href="#" class="d-block text-white"></a>
                 </div>
 
             </div>
@@ -184,7 +184,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#  " class="nav-link text-white">
+                        <a href="{{ route('pengaduan.index') }}  " class="nav-link text-white">
                             <i class="nav-icon fas fa-exclamation-circle"></i> <!-- Ikon diubah ke fa-exclamation-circle -->
                             <p>PENGADUAN</p>
                         </a>

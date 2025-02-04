@@ -9,7 +9,6 @@
             <div class="card-body">
                 <form id="kerusakanForm" action="/kerusakan" method="POST" enctype="multipart/form-data">
                     @csrf
-
                     <div class="mb-3">
                         <label for="namaInfrastruktur" class="form-label">Nama Infrastruktur</label>
                         <input type="text" class="form-control" name="nama_infrastruktur" placeholder="Masukkan nama infrastruktur" required>
@@ -72,7 +71,7 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
     const defaultLat = 1.7429;
     const defaultLng = 98.7797;
 

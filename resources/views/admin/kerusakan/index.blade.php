@@ -184,10 +184,6 @@
     </div>
 </div>
 
-
-
-
-
 @endforeach
 
 <!-- LeafletJS -->

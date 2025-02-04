@@ -259,92 +259,69 @@
     <section id="pengaduan" class="py-5 bg-light">
         <div class="container mt-5">
             <h2 class="mb-4">Form Pengaduan Infrastruktur</h2>
-            <form id="pengaduanForm" action="#" method="POST" enctype="multipart/form-data">
+            <form id="pengaduanForm" action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                        @if ($errors->any())
-                 <div div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-                 @endif
+
                 <div class="mb-3">
-                    <label class="form-label">Nama Pelapor</label>
-                    <input type="text" class="form-control" name="nama_pelapor" required>
+                    <label for="nama" class="form-label">Nama Pelapor</label>
+                    <input type="text" class="form-control" name="nama" placeholder="Masukkan nama pelapor" required>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Nomor HP/WA</label>
-                    <input type="text" class="form-control" name="nomor_hp" required>
+                    <label for="no_hp" class="form-label">No HP</label>
+                    <input type="text" class="form-control" name="no_hp" placeholder="Masukkan nomor HP" required>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Alamat Kerusakan</label>
-                    <input type="text" class="form-control" name="alamat_kerusakan" required>
+                    <label for="namaInfrastruktur" class="form-label">Nama Infrastruktur</label>
+                    <input type="text" class="form-control" name="nama_infrastruktur" placeholder="Masukkan nama infrastruktur" required>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Lokasi Kerusakan</label>
-                    <div id="map"></div>
-                    <input type="hidden" name="lokasi_kerusakan" id="lokasi_kerusakan" required>
-                    <button type="button" id="lokasiSaya" class="btn btn-primary mt-2">Gunakan Lokasi Saya</button>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Jenis Infrastruktur</label>
-                    <select class="form-control" name="jenis_infrastruktur" id="jenis_infrastruktur" required>
-                        <option value="Jalan">Jalan</option>
-                        <option value="Jembatan">Jembatan</option>
-                        <option value="Drainase">Drainase</option>
-                        <option value="Lainnya">Lainnya</option>
+                    <label for="jenisInfrastruktur" class="form-label">Jenis Infrastruktur</label>
+                    <select class="form-select" name="jenis_infrastruktur" id="jenisInfrastruktur" required>
+                        <option value="" disabled selected>Pilih jenis infrastruktur</option>
+                        @foreach($jenisInfrastruktur as $jenis)
+                            <option value="{{ $jenis->id }}">{{ $jenis->jenis_infrastruktur }}</option>
+                        @endforeach
                     </select>
-                    <input type="text" class="form-control mt-2" name="jenis_lainnya" id="jenis_lainnya" placeholder="Jelaskan jenis lainnya" style="display:none;">
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Deskripsi Kerusakan</label>
-                    <textarea class="form-control" name="deskripsi_kerusakan" rows="4" required></textarea>
+                    <label for="alamat" class="form-label">Alamat</label>
+                    <input type="text" class="form-control" name="alamat" placeholder="Masukkan alamat" required>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Dampak yang Ditimbulkan</label>
-                    <div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Macet" id="dampak1">
-                            <label class="form-check-label" for="dampak1">Macet</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Kecelakaan" id="dampak2">
-                            <label class="form-check-label" for="dampak2">Kecelakaan</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Banjir" id="dampak3">
-                            <label class="form-check-label" for="dampak3">Banjir</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Kerusakan Kendaraan" id="dampak4">
-                            <label class="form-check-label" for="dampak4">Kerusakan Kendaraan</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="dampak[]" value="Lainnya" id="dampak5">
-                            <label class="form-check-label" for="dampak5">Lainnya</label>
-                        </div>
-                        <input type="text" class="form-control mt-2" name="dampak_lainnya" id="dampak_lainnya" placeholder="Jelaskan dampak lainnya" style="display:none;">
-                    </div>
+                    <label for="deskripsi" class="form-label">Deskripsi Kerusakan</label>
+                    <textarea class="form-control" name="deskripsi" rows="4" placeholder="Jelaskan kerusakan yang terjadi" required></textarea>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Upload Bukti (Foto/Video)</label>
-                    <input type="file" class="form-control" name="upload_bukti" accept="image/*, video/*">
+                    <label for="lokasiKerusakan" class="form-label">Lokasi Kerusakan (Klik di Peta)</label>
+                    <div id="map" class="rounded shadow" style="height: 300px;"></div>
+                    <input type="hidden" name="latitude" id="latitude" required>
+                    <input type="hidden" name="longitude" id="longitude" required>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Tanggal Pengaduan</label>
-                    <input type="date" class="form-control" name="tanggal_pengaduan" required>
+                    <label for="tanggalKerusakan" class="form-label">Tanggal Kerusakan</label>
+                    <input type="date" class="form-control" name="tanggal_kerusakan" required>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Status Pengaduan</label>
-                    <input type="text" class="form-control" name="status_pengaduan" value="Menunggu Verifikasi" readonly>
+                    <label for="upload_foto" class="form-label">Upload Foto</label>
+                    <input type="file" class="form-control" name="upload_foto" accept="image/*">
                 </div>
-                <button type="submit" class="btn btn-primary">Kirim Pengaduan</button>
+
+                <div class="text-end">
+                    <a href="{{ route('pengaduan.index') }}" class="btn btn-outline-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Kirim Laporan</button>
+                </div>
             </form>
+
         </div>
 
-    </section>
 
     <!-- Galeri Section -->
     <section id="galeri" class="py-5">
@@ -402,62 +379,62 @@
         const defaultLat = 1.7429;
         const defaultLng = 98.7797;
 
-        // Initialize Leaflet Map
+        // Inisialisasi Leaflet Map
         const map = L.map('map').setView([defaultLat, defaultLng], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
+        // Tambahkan marker yang bisa dipindahkan
         let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
 
-        // Simpan koordinat saat marker dipindahkan
-        marker.on('dragend', function(e) {
+        // Update koordinat saat marker dipindahkan
+        marker.on('dragend', function (e) {
             const { lat, lng } = e.target.getLatLng();
-            document.querySelector('input[name="lokasi_kerusakan"]').value = `${lat}, ${lng}`;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
         });
 
-        // Simpan koordinat saat peta diklik
-        map.on('click', function(e) {
+        // Update koordinat saat peta diklik
+        map.on('click', function (e) {
             const { lat, lng } = e.latlng;
             marker.setLatLng([lat, lng]);
-            document.querySelector('input[name="lokasi_kerusakan"]').value = `${lat}, ${lng}`;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
         });
 
         // Tombol "Gunakan Lokasi Saya"
-        document.getElementById('lokasiSaya').addEventListener('click', function() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                var lokasi = latitude + ',' + longitude;
-                document.getElementById('lokasi_kerusakan').value = lokasi;
-                alert('Lokasi berhasil diambil: ' + lokasi); // Untuk debugging
-            }, function(error) {
-                alert('Gagal mengambil lokasi: ' + error.message); // Untuk debugging
-            });
-        } else {
-            alert('Geolocation tidak didukung di browser ini.'); // Untuk debugging
-        }
-    });
-
-        // Toggle input untuk jenis infrastruktur lainnya
-        document.getElementById('jenis_infrastruktur').addEventListener('change', function() {
-            const lainnyaInput = document.getElementById('jenis_lainnya');
-            lainnyaInput.style.display = this.value === 'Lainnya' ? 'block' : 'none';
+        document.getElementById('lokasiSaya').addEventListener('click', function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        document.getElementById('latitude').value = latitude;
+                        document.getElementById('longitude').value = longitude;
+                        marker.setLatLng([latitude, longitude]);
+                        map.setView([latitude, longitude], 13);
+                        alert('Lokasi berhasil diambil: ' + latitude + ', ' + longitude);
+                    },
+                    function (error) {
+                        alert('Gagal mengambil lokasi: ' + error.message);
+                    }
+                );
+            } else {
+                alert('Geolocation tidak didukung di browser ini.');
+            }
         });
 
-        // Form submission
-        document.getElementById('pengaduanForm').addEventListener('submit', function(e) {
+        // Tampilkan input "Jenis Infrastruktur Lainnya" jika opsi "Lainnya" dipilih
+        document.getElementById('jenis_infrastruktur').addEventListener('change', function () {
+            document.getElementById('jenis_lainnya').style.display = this.value === 'Lainnya' ? 'block' : 'none';
+        });
 
-});
-
-document.getElementById('dampak5').addEventListener('change', function() {
-    if (this.checked) {
-        document.getElementById('dampak_lainnya').style.display = 'block';
-    } else {
-        document.getElementById('dampak_lainnya').style.display = 'none';
-    }
-});
+        // Tampilkan input "Dampak Lainnya" jika checkbox dampak lainnya dipilih
+        document.getElementById('dampak5').addEventListener('change', function () {
+            document.getElementById('dampak_lainnya').style.display = this.checked ? 'block' : 'none';
+        });
     </script>
+
 </body>
 </html>

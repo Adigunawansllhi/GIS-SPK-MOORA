@@ -5,12 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KerusakanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JenisController;
+use App\Http\Controllers\PengaduanController;
 use Illuminate\Support\Js;
 
 // Route untuk halaman utama
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [PengaduanController::class, 'create'])->name('home');;
 
 // Route untuk registrasi dan login
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
@@ -42,6 +41,14 @@ Route::post('/jenis', [JenisController::class, 'store'])->name('jenis.store');
 Route::get('/jenis{id}/edit', [JenisController::class, 'edit'])->name('jenis.edit');
 Route::put('/jenis{id}', [JenisController::class, 'update'])->name('jenis.update');
 Route::delete('/jenis/{id}', [JenisController::class, 'destroy'])->name('jenis.delete');
+
+// Route untuk pengaduan
+Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
+Route::get('/home/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
+Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
+Route::delete('/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.delete');
+
+
 
 // Route untuk dashboard
 Route::get('/admin/dashboard', function () {
