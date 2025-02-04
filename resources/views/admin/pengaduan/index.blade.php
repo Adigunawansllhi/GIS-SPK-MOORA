@@ -18,6 +18,7 @@
                         <th>Nama Infrastruktur</th>
                         <th>Jenis Infrastruktur</th>
                         <th>Alamat</th>
+                        <th>Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -30,13 +31,44 @@
                         <td>{{ $item->nama_infrastruktur }}</td>
                         <td>{{ $item->jenisInfrastruktur->jenis_infrastruktur ?? '-' }}</td>
                         <td>{{ $item->alamat }}</td>
+                        <td>
+                            @if($item->status == 'pending')
+                                <span class="badge badge-warning">
+                                    <i class="fas fa-clock"></i> {{ ucfirst($item->status) }}
+                                </span>
+                            @elseif($item->status == 'disetujui')
+                                <span class="badge badge-success">
+                                    <i class="fas fa-check"></i> {{ ucfirst($item->status) }}
+                                </span>
+                            @elseif($item->status == 'ditolak')
+                                <span class="badge badge-danger">
+                                    <i class="fas fa-times"></i> {{ ucfirst($item->status) }}
+                                </span>
+                            @endif
+                        </td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
-
-
                                 <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal{{ $item->id }}">
                                     <i class="fas fa-info-circle"></i>
                                 </button>
+
+                                <!-- Tombol Verifikasi -->
+                                <button class="btn btn-outline-success btn-sm" onclick="confirmVerifikasi(event, {{ $item->id }})">
+                                    <i class="fas fa-check"></i>
+                                </button>
+
+                                <form id="verifikasi-form-{{ $item->id }}" action="{{ route('pengaduan.verifikasi', $item->id) }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+
+                                <!-- Tombol Ditolak -->
+                                <button class="btn btn-outline-danger btn-sm" onclick="confirmDitolak(event, {{ $item->id }})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+
+                                <form id="ditolak-form-{{ $item->id }}" action="{{ route('pengaduan.ditolak', $item->id) }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
 
                                 <!-- Tombol Hapus dengan SweetAlert -->
                                 <form action="{{ route('pengaduan.delete', $item->id) }}" method="POST" onsubmit="return confirmDelete(event, {{ $item->id }})">
@@ -125,6 +157,65 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 event.target.submit();
+            }
+        });
+    }
+</script>
+
+<script>
+    function confirmDelete(event, id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Data pengaduan akan dihapus secara permanen!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                event.target.submit();
+            }
+        });
+    }
+
+    function confirmVerifikasi(event, id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Pengaduan ini akan disetujui!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, setujui!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('verifikasi-form-' + id).submit();
+            }
+        });
+    }
+
+    function confirmDitolak(event, id) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Pengaduan ini akan ditolak!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Ya, tolak!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('ditolak-form-' + id).submit();
             }
         });
     }

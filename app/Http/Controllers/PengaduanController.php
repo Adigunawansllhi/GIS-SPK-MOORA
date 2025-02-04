@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\JenisInfrastruktur;
 use App\Models\Pengaduan;
+use App\Models\Kerusakan; // Pastikan Anda mengimpor model Kerusakan
 
 class PengaduanController extends Controller
 {
@@ -14,7 +15,6 @@ class PengaduanController extends Controller
         $pengaduan = Pengaduan::with('jenisInfrastruktur')->get(); // Mendapatkan data pengaduan
         return view('admin.pengaduan.index', compact('jenisInfrastruktur', 'pengaduan')); // Kirim kedua variabel ke view
     }
-
 
     public function create()
     {
@@ -64,14 +64,52 @@ class PengaduanController extends Controller
         return redirect()->route('home')->with('success', 'Pengaduan berhasil dikirim!');
     }
 
+    public function verifikasi($id)
+    {
+        // Temukan pengaduan berdasarkan ID
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        // Ubah status pengaduan menjadi 'disetujui'
+        $pengaduan->status = 'disetujui';
+        $pengaduan->save();
+
+        // Buat entri baru di tabel kerusakan
+        Kerusakan::create([
+            'pengaduan_id' => $pengaduan->id, // Jika Anda memiliki relasi
+            'nama_infrastruktur' => $pengaduan->nama_infrastruktur,
+            'jenis_infrastruktur' => $pengaduan->jenis_infrastruktur,
+            'alamat' => $pengaduan->alamat,
+            'deskripsi' => $pengaduan->deskripsi,
+            'latitude' => $pengaduan->latitude,
+            'longitude' => $pengaduan->longitude,
+            'tanggal_kerusakan' => $pengaduan->tanggal_kerusakan,
+            'upload_foto' => $pengaduan->upload_foto,
+            // Tambahkan kolom lain yang diperlukan di tabel kerusakan
+        ]);
+
+        return redirect()->route('pengaduan.index')->with('success', 'Pengaduan berhasil diverifikasi.');
+    }
+
+    public function ditolak($id)
+    {
+        // Temukan pengaduan berdasarkan ID
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        // Ubah status pengaduan menjadi 'ditolak'
+        $pengaduan->status = 'ditolak';
+        $pengaduan->save();
+
+        return redirect()->route('pengaduan.index')->with('success', 'Pengaduan berhasil ditolak.');
+    }
+
     public function destroy($id)
     {
         // Cari data pengaduan berdasarkan ID
         $pengaduan = Pengaduan::findOrFail($id);
 
-        // Hapus file foto jika ada
+        // Hapus file foto jika ada dan hanya jika pengaduan dihapus
         if ($pengaduan->upload_foto) {
-            $fotoPath = public_path('storage/foto_pengaduan/' . $pengaduan->upload_foto);
+            $fotoPath = public_path('uploads/' . $pengaduan->upload_foto);
             if (file_exists($fotoPath)) {
                 unlink($fotoPath);
             }

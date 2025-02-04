@@ -373,67 +373,103 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="{{ asset('asset/js/script.js') }}"></script>
     <script>
-        // Koordinat default: Sibolga
-        const defaultLat = 1.7429;
-        const defaultLng = 98.7797;
+       document.addEventListener("DOMContentLoaded", function () {
+    // Koordinat default: Sibolga
+    const defaultLat = 1.7429;
+    const defaultLng = 98.7797;
 
-        // Inisialisasi Leaflet Map
-        const map = L.map('map').setView([defaultLat, defaultLng], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+    // Batas Kota Sibolga
+    const bounds = [
+        [1.7240, 98.7600], // Batas Selatan, Barat (Lat, Lng)
+        [1.7550, 98.8000]  // Batas Utara, Timur (Lat, Lng)
+    ];
 
-        // Tambahkan marker yang bisa dipindahkan
-        let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+    // Inisialisasi Leaflet Map
+    const map = L.map('map', {
+        zoomControl: true,
+        minZoom: 12,
+        maxZoom: 18
+    }).setView([defaultLat, defaultLng], 13);
 
-        // Update koordinat saat marker dipindahkan
-        marker.on('dragend', function (e) {
-            const { lat, lng } = e.target.getLatLng();
-            document.getElementById('latitude').value = lat;
-            document.getElementById('longitude').value = lng;
-        });
+    // Tambahkan tile layer OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-        // Update koordinat saat peta diklik
-        map.on('click', function (e) {
-            const { lat, lng } = e.latlng;
+    // Tambahkan marker yang bisa dipindahkan
+    let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+    // Update koordinat saat marker dipindahkan
+    marker.on('dragend', function (e) {
+        const { lat, lng } = e.target.getLatLng();
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+    });
+
+    // Update koordinat saat peta diklik (dengan batas wilayah)
+    map.on('click', function (e) {
+        const { lat, lng } = e.latlng;
+
+        if (lat >= 1.7240 && lat <= 1.7550 && lng >= 98.7600 && lng <= 98.8000) {
             marker.setLatLng([lat, lng]);
             document.getElementById('latitude').value = lat;
             document.getElementById('longitude').value = lng;
-        });
+        } else {
+            Swal.fire({
+                title: 'Lokasi di luar Kota Sibolga!',
+                text: 'Silakan pilih lokasi di dalam area Kota Sibolga.',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#3085d6'
+            }).then(() => {
+                marker.setLatLng([defaultLat, defaultLng]);
+                document.getElementById('latitude').value = defaultLat;
+                document.getElementById('longitude').value = defaultLng;
+            });
+        }
+    });
 
-        // Tombol "Gunakan Lokasi Saya"
-        document.getElementById('lokasiSaya').addEventListener('click', function () {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        document.getElementById('latitude').value = latitude;
-                        document.getElementById('longitude').value = longitude;
-                        marker.setLatLng([latitude, longitude]);
-                        map.setView([latitude, longitude], 13);
-                        alert('Lokasi berhasil diambil: ' + latitude + ', ' + longitude);
-                    },
-                    function (error) {
-                        alert('Gagal mengambil lokasi: ' + error.message);
-                    }
-                );
-            } else {
-                alert('Geolocation tidak didukung di browser ini.');
+
+    // Tampilkan input "Jenis Infrastruktur Lainnya" jika opsi "Lainnya" dipilih
+    document.getElementById('jenis_infrastruktur').addEventListener('change', function () {
+        document.getElementById('jenis_lainnya').style.display = this.value === 'Lainnya' ? 'block' : 'none';
+    });
+
+});
+
+// Sweet alert
+    document.getElementById('pengaduanForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah pengiriman langsung
+
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Pastikan semua data sudah benar sebelum dikirim.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Kirim!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Kirim form secara manual setelah konfirmasi
+                this.submit();
+
+                // Menampilkan notifikasi sukses setelah form dikirim
+                Swal.fire({
+                    title: 'Laporan Terkirim!',
+                    text: 'Pengaduan Anda telah berhasil dikirim.',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
             }
         });
-
-        // Tampilkan input "Jenis Infrastruktur Lainnya" jika opsi "Lainnya" dipilih
-        document.getElementById('jenis_infrastruktur').addEventListener('change', function () {
-            document.getElementById('jenis_lainnya').style.display = this.value === 'Lainnya' ? 'block' : 'none';
-        });
-
-        // Tampilkan input "Dampak Lainnya" jika checkbox dampak lainnya dipilih
-        document.getElementById('dampak5').addEventListener('change', function () {
-            document.getElementById('dampak_lainnya').style.display = this.checked ? 'block' : 'none';
-        });
+    });
     </script>
 
 </body>

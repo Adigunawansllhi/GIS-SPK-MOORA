@@ -47,7 +47,8 @@ Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan
 Route::get('/home/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
 Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 Route::delete('/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.delete');
-
+Route::post('/pengaduan/verifikasi/{id}', [PengaduanController::class, 'verifikasi'])->name('pengaduan.verifikasi');
+Route::post('pengaduan/{id}/ditolak', [PengaduanController::class, 'ditolak'])->name('pengaduan.ditolak');
 
 
 // Route untuk dashboard
