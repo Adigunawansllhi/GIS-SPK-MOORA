@@ -34,14 +34,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
     <style>
         #map {
-        width: 100%;
-        height: 300px; /* Pastikan ada ukuran */
+        height: 400px; /* Pastikan tinggi peta diatur */
+        width: 100%; /* Pastikan lebar peta diatur */
         border: 1px solid #ddd;
         border-radius: 10px;
         }
+
+      <style>
+    /* Ensure map has a height */
+    #map {
+        height: 400px;
+    }
+
+    /* Color the icons based on the infrastructure type */
+    .leaflet-div-icon-red {
+        background-color: red !important;
+        width: 25px;
+        height: 41px;
+        border-radius: 50%;
+    }
+
+    .leaflet-div-icon-blue {
+        background-color: blue !important;
+        width: 25px;
+        height: 41px;
+        border-radius: 50%;
+    }
+
+    .leaflet-div-icon-green {
+        background-color: green !important;
+        width: 25px;
+        height: 41px;
+        border-radius: 50%;
+    }
+
+    .leaflet-div-icon-gray {
+        background-color: gray !important;
+        width: 25px;
+        height: 41px;
+        border-radius: 50%;
+    }
+</style>
+
 
     </style>
 
@@ -81,7 +120,7 @@
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link text-decoration-none">
             <img src="{{ asset('asset/img/logo-pu.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 33px; height: 33px;">
-            <span class="brand-text font-weight-light text-white">AdminLTE 3</span>
+            <span class="brand-text font-weight-light text-white">SIG-PK</span>
         </a>
 
         <!-- Sidebar -->
@@ -125,6 +164,13 @@
                             <p>USER</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('jenis.index') }}" class="nav-link text-white">
+                            <i class="fas fa-hard-hat nav-icon"></i>
+                            <p>JENIS INFRASTRUKTUR</p>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="{{ route('kerusakan.index') }}" class="nav-link text-white">
                             <i class="nav-icon fas fa-tools"></i>
@@ -225,7 +271,8 @@
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 
 <script>
     // Script untuk menampilkan SweetAlert

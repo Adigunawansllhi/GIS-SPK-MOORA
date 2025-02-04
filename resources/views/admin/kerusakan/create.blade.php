@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="card shadow-lg">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2c3e50">
                 <h3 class="card-title mb-0">Laporkan Kerusakan Infrastruktur</h3>
             </div>
             <div class="card-body">
@@ -17,7 +17,12 @@
 
                     <div class="mb-3">
                         <label for="jenisInfrastruktur" class="form-label">Jenis Infrastruktur</label>
-                        <input type="text" class="form-control" name="jenis_infrastruktur" placeholder="Masukkan jenis infrastruktur" required>
+                        <select class="form-select" name="jenis_infrastruktur" id="jenisInfrastruktur" required>
+                            <option value="" disabled selected>Pilih jenis infrastruktur</option>
+                            @foreach($jenisInfrastruktur as $jenis)
+                                <option value="{{ $jenis->id }}">{{ $jenis->jenis_infrastruktur }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="mb-3">

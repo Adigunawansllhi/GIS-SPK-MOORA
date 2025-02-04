@@ -20,4 +20,9 @@ class Kerusakan extends Model
         'tanggal_kerusakan',
         'upload_foto'
     ];
+
+    public function jenisInfrastruktur()
+    {
+        return $this->belongsTo(JenisInfrastruktur::class, 'jenis_infrastruktur');
+    }
 }
